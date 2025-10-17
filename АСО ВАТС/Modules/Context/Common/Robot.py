@@ -139,6 +139,8 @@ class Robots:
             last_on_polygon = None
             found_on_polygon = 0
             for robot in self.list:
+                if robot.r_id == "005":
+                    continue
                 if robot.position_quality >= 0.8:
                     last_on_polygon = robot.r_id
                     found_on_polygon += 1

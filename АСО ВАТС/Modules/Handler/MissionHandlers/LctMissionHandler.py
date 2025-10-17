@@ -14,6 +14,10 @@ class LctMissionHandler(BaseMissionHandler):
             for cell in self.context.field.cells:
                 cell.fill = None
                 cell.fill_status = 0
+            for i in range(3):
+                self.context.spd.t_lights[i].color = 2
+            for field_cell in self.context.spd.field_cells:
+                field_cell.state = 0
         if status == 2:
             fill_whole = 0
             for cell in self.context.field.cells:

@@ -13,6 +13,7 @@ class LctSPDHandler(BaseHandler):
             self.devices = (
                 BarrierSPDMiddleware(context, context.spd.barrier),
                 BrushSPDMiddleware(context, context.spd.brush),
+                MtsSPDMiddleware(context, context.spd.mts),
                 *[PedestrianSPDMiddleware(context, _) for _ in context.spd.pedestrians],
                 *[TLightSPDMiddleware(context, _) for _ in context.spd.t_lights],
             )
@@ -20,6 +21,7 @@ class LctSPDHandler(BaseHandler):
             self.devices = (
                 BarrierSPDMiddleware(context, context.spd.barrier),
                 RemoteSPDMiddleware(context, context.spd.remote),
+                MtsSPDMiddleware(context, context.spd.mts),
                 *[PedestrianSPDMiddleware(context, _) for _ in context.spd.pedestrians],
                 *[TLightSPDMiddleware(context, _) for _ in context.spd.t_lights],
                 *[FieldCellSPDMiddleware(context, _) for _ in context.spd.field_cells],
@@ -45,6 +47,17 @@ class PedestrianSPDMiddleware(BaseSPDMiddleware):
 
 
 class BrushSPDMiddleware(BaseSPDMiddleware):
+    def __init__(self, context, device):
+        super().__init__(context, device)
+
+    def prepare_data(self):
+        return {"s": self.device.state}
+
+    def process_response(self, message):
+        pass
+
+
+class MtsSPDMiddleware(BaseSPDMiddleware):
     def __init__(self, context, device):
         super().__init__(context, device)
 
