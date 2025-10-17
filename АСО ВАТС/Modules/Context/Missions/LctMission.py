@@ -101,6 +101,13 @@ class LctMission(BaseMission):
         for i in range(3):
             self.context.spd.t_lights[i].color = 2
 
+        self.context.spd.barrier.state = 0
+
+        if self.cybs["CybP_06"]:
+            self.context.spd.mts.state = 1
+        else:
+            self.context.spd.mts.state = 0
+
         self.begin_mission_update()
 
     def make_actions(self):
@@ -112,7 +119,7 @@ class LctMission(BaseMission):
                 *f.get_service_zone("cyb_p_02_trigger"),
                 *f.get_service_zone("cyb_p_04_trigger"),
             ]
-            if self.check_robot_in_zones(check_zones):
+            if self.check_robot_in_zones(check_zones, frame=False):
                 return False
 
             for cyb in self.cyb_status:
@@ -146,7 +153,7 @@ class LctMission(BaseMission):
 
         def run_cyb_02():
             check_zones = [*f.get_service_zone("cyb_p_02_trigger")]
-            if not self.check_robot_in_zones(check_zones):
+            if not self.check_robot_in_zones(check_zones, frame=False):
                 return False
 
             for cyb in self.cyb_status:
@@ -181,7 +188,7 @@ class LctMission(BaseMission):
                 *f.get_service_zone("cyb_p_02_trigger"),
                 *f.get_service_zone("cyb_p_04_trigger"),
             ]
-            if self.check_robot_in_zones(check_zones):
+            if self.check_robot_in_zones(check_zones, frame=False):
                 return False
 
             for cyb in self.cyb_status:
@@ -219,7 +226,7 @@ class LctMission(BaseMission):
 
         def run_cyb_04():
             check_zones = [*f.get_service_zone("cyb_p_04_trigger")]
-            if not self.check_robot_in_zones(check_zones):
+            if not self.check_robot_in_zones(check_zones, frame=False):
                 return False
 
             for cyb in self.cyb_status:
@@ -266,12 +273,12 @@ class LctMission(BaseMission):
             if self.check_robot_in_zones(f.get_service_zone("pedestrian_l_trigger"), frame=False):
                 if not self.mission_vars["pedestrian_l_active"]:
                     self.mission_vars["pedestrian_l_active"] = True
-                    self.context.spd.pedestrians[0].state = 1
+                    self.context.spd.pedestrians[1].state = 1
 
                     def reset_pedestrian_l_state():
-                        self.context.spd.pedestrians[0].state = 0
+                        self.context.spd.pedestrians[1].state = 0
 
-                    self.once(4, reset_pedestrian_l_state)
+                    self.once(randint(6, 40), reset_pedestrian_l_state)
             else:
                 self.mission_vars["pedestrian_l_active"] = False
 
@@ -279,17 +286,17 @@ class LctMission(BaseMission):
             if self.check_robot_in_zones(f.get_service_zone("pedestrian_r_trigger"), frame=False):
                 if not self.mission_vars["pedestrian_r_active"]:
                     self.mission_vars["pedestrian_r_active"] = True
-                    self.context.spd.pedestrians[1].state = 1
+                    self.context.spd.pedestrians[0].state = 1
 
                     def reset_pedestrian_r_state():
-                        self.context.spd.pedestrians[1].state = 0
+                        self.context.spd.pedestrians[0].state = 0
 
-                    self.once(4, reset_pedestrian_r_state)
+                    self.once(randint(6, 40), reset_pedestrian_r_state)
             else:
                 self.mission_vars["pedestrian_r_active"] = False
 
         def set_slip_status():
-            if self.check_robot_in_zones(f.get_zone("slip")):
+            if self.check_robot_in_zones(f.get_zone("slip"), frame=False):
                 self.mission_vars["slip_direction"] = choice([90, -90])
             else:
                 self.mission_vars["slip_direction"] = 0
@@ -316,7 +323,7 @@ class LctMission(BaseMission):
 
         def set_barrier_status():
             color = 1
-            if self.context.mission.check_robot_in_zones(f.get_service_zone("barrier_trigger")):
+            if self.context.mission.check_robot_in_zones(f.get_service_zone("barrier_trigger"), frame=False):
                 color = 4
             if self.context.spd.barrier.state == 1:
                 color = 2

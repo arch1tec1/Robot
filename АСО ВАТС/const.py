@@ -129,8 +129,8 @@ if MISSION_MODE == "lct":
             "start_finish": [19],
         },
         "service_zones": {
-            "pedestrian_l_trigger": [14, 15, 16],
-            "pedestrian_r_trigger": [47, 56, 65],
+            "pedestrian_l_trigger": [47, 56, 65, 66, 38],
+            "pedestrian_r_trigger": [14, 15, 16, 13, 17],
             "barrier_trigger": [29, 38, 47],
             "cyb_p_02_trigger": [26],
             "cyb_p_04_trigger": [67, 68, 69],

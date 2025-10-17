@@ -34,6 +34,11 @@ class BrushSPD(BaseSPD):
     state: int = 0
 
 
+@dataclass
+class MtsSPD(BaseSPD):
+    state: int = 0
+
+
 class LctSPDSet(BaseSPDSet):
     def __init__(self, context):
         super().__init__(context)
@@ -75,10 +80,16 @@ class LctSPDSet(BaseSPDSet):
             ),
         ]
 
-        self.brush = BrushSPD(d_id=6, address="127.0.0.1", port="5051")
+        self.brush = BrushSPD(d_id=6, address="127.0.0.1", port="11500")
+
+        self.mts = MtsSPD(
+            d_id=7,
+            address="127.0.0.1" if self.context.args.get_arg("twin") else "192.168.60.145",
+            port="5071" if self.context.args.get_arg("twin") else "4000",
+        )
 
         self.remote = RemoteSPD(
-            d_id=7,
+            d_id=8,
             address="127.0.0.1" if self.context.args.get_arg("twin") else "192.168.60.161",
             port="5061" if self.context.args.get_arg("twin") else "4000",
         )
@@ -86,7 +97,7 @@ class LctSPDSet(BaseSPDSet):
         self.field_cells = [
             FieldCellSPD(
                 d_id=10 + _,
-                address=f"192.168.60.{71+_}",
+                address=f"192.168.60.{71 + _}",
                 port="4000",
             )
             for _ in range(40)

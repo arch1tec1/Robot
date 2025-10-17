@@ -113,8 +113,8 @@ class MissionHandler(BaseHandler):
         if strategy == "time":
             time.sleep(duration)
         elif strategy == "flag":
-            self.context.wait_flag = True
-            while self.context.wait_flag:
+            self.context.mission.wait_flag = True
+            while self.context.mission.wait_flag:
                 time.sleep(0.1)
 
     def run(self):
