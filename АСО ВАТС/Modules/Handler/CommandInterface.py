@@ -1,19 +1,20 @@
-import json
 import sys
 import time
 
-import requests
 from rich.live import Live
 from rich.panel import Panel
 from rich.text import Text
 
 from Core import BaseHandler
+from Modules.Context.Common import Field, Robots
+from Modules.Context.Missions import ChvtMission, LctMission
+from Modules.Context.SDPStores import ChvtSPDSet, LctSPDSet
 
 is_windows = sys.platform == "win32"
 if is_windows:
     import msvcrt
 
-
+import const as c
 class CommandInterface(BaseHandler):
     def __init__(self, context):
         super().__init__(context)
@@ -97,6 +98,14 @@ class CommandInterface(BaseHandler):
             self.context.mission.triggers.stop_mission_trigger = True
             self.context.lg.log("Команда '/stop' успешно выполнена")
         elif command == "/reset":
+            if c.MISSION_MODE == "chvt":
+                self.context.mission = ChvtMission(self)
+                self.context.spd = ChvtSPDSet(self)
+            elif c.MISSION_MODE == "lct":
+                self.context.mission = LctMission(self)
+                self.context.spd = LctSPDSet(self)
+            self.context.field = Field()
+            self.context.robots = Robots(self)
             self.context.mission.triggers.reset_mission_trigger = True
             self.context.mission.triggers.reset_twin_trigger = True
             self.context.lg.log("Команда '/reset' успешно выполнена")

@@ -1,7 +1,13 @@
 from threading import Thread
 
 from . import Context, BaseHandler
-from .Handler import UDPTwinDataReceiveHandler, MissionHandler, TrustedHandler, CamUDPReceiver
+from .Handler import (
+    UDPTwinDataReceiveHandler,
+    MissionHandler,
+    TrustedHandler,
+    CamUDPReceiver,
+    UDPRobotStatusSendHandler,
+)
 
 
 class HandlerDispatcher(BaseHandler):
@@ -13,6 +19,7 @@ class HandlerDispatcher(BaseHandler):
             f"{context.config.get('general', 'app_name')}, версия {context.config.get('general', 'version')}"
         )
         self.handlers.append(UDPTwinDataReceiveHandler(self.context))
+        self.handlers.append(UDPRobotStatusSendHandler(self.context))
         self.handlers.append(CamUDPReceiver(self.context))
         context.lg.init("Загрузка завершена.")
 

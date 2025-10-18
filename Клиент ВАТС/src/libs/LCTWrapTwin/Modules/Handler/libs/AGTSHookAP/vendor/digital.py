@@ -70,16 +70,18 @@ class UDPDigitalDriver(BaseUDPSendHandler):
             if self.context.mission.cybs.get("CybP_05", None):
                 if not self.context.mission.brush_controller_burned:
                     sum_speed = sum(map(abs, m.values()))
-                    if sum_speed > 0 and self.context.mission.brush_speed > 0:
+                    if self.context.mission.brush_speed > 0:
                         self.context.mission.brush_controller_temperature += (
                             random.uniform(0.02, 0.2) * sum_speed
                             if self.context.mission.brush_controller_temperature > 120
-                            else 0.02
+                            else 0.03
                         )
                     else:
-                        self.context.mission.brush_controller_temperature -= 0.1
+                        self.context.mission.brush_controller_temperature -= (
+                            0.05 if self.context.mission.brush_controller_temperature > 0 else 0
+                        )
 
-                    if self.context.mission.brush_controller_temperature >= 150:
+                    if self.context.mission.brush_controller_temperature >= random.randint(150, 180):
                         self.context.mission.brush_controller_burned = True
                         self.context.lg.error("Контроллер щётки успешно сгорел.")
 
