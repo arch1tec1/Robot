@@ -3,7 +3,6 @@ from threading import Thread
 import const as c
 from Core import BaseHandler
 from Modules import Context
-from Modules.Context.SDPStores import ChvtSPDSet, LctSPDSet
 from Modules.Handler import (
     TwinPositionReceiveHandler,
     NavigationPositionReceiveHandler,
@@ -11,6 +10,7 @@ from Modules.Handler import (
     LctMissionHandler,
     ChvtHTTPMissionReceiver,
     LctHTTPMissionReceiver,
+    RobotStatusReceiveHandler,
 )
 from Modules.Handler.CommandInterface import CommandInterface
 from Modules.Handler.RenderHandler import RenderHandler
@@ -30,14 +30,14 @@ class HandlerDispatcher(BaseHandler):
             self.handlers.append(TwinPositionReceiveHandler(self.context))
         else:
             self.handlers.append(NavigationPositionReceiveHandler(self.context))
+        
+        self.handlers.append(RobotStatusReceiveHandler(self.context))
 
         if c.MISSION_MODE == "chvt":
-            self.spd = ChvtSPDSet(self.context)
             self.handlers.append(ChvtSPDHandler(self.context))
             self.handlers.append(ChvtMissionHandler(self.context))
             self.handlers.append(ChvtHTTPMissionReceiver(self.context))
         elif c.MISSION_MODE == "lct":
-            self.spd = LctSPDSet(self.context)
             self.handlers.append(LctSPDHandler(self.context))
             self.handlers.append(LctMissionHandler(self.context))
             self.handlers.append(LctHTTPMissionReceiver(self.context))

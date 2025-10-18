@@ -108,27 +108,23 @@ class AppWindow(arcade.Window):
                     continue
                 arcade.draw_polygon_filled(robot.chassis.get_translated_vertices(), (254, 254, 0))
                 # arcade.draw_polygon_outline(robot.wheel_base.get_translated_vertices(), (0, 254, 254))
-                arcade.Text(
-                    "R_" + robot.r_id,
-                    robot.chassis.get_translated_center()[0],
-                    robot.chassis.get_translated_center()[1] + 40,
-                    font_size=18,
-                    color=(20, 20, 20, 200),
-                ).draw()
+                if robot.r_id != "002":
+                    arcade.Text(
+                        "t: " + str(round(robot.brush_controller_temperature)) + "°C",
+                        robot.chassis.get_translated_center()[0],
+                        robot.chassis.get_translated_center()[1] + 40,
+                        font_size=18,
+                        color=(20, 20, 20, 200),
+                    ).draw()
                 for wheel in robot.wheels:
                     color = (200, 200, 200)
                     for cell in self.app_context.field.cells:
                         if cell.contains(wheel) and cell.zone_type != "road":
                             color = (254, 0, 0)
                         if cell.contains(wheel) and (
-                            cell.zone_type == "control"
-                            or cell.zone_type == "control_sensor_select"
-                            or cell.zone_type == "load"
-                            or cell.zone_type == "fire"
-                            or cell.zone_type == "check"
-                            or cell.zone_type == "cleaning"
-                            or cell.zone_type == "start"
-                            or cell.zone_type == "finish"
+                            cell.zone_type == "slip"
+                            or cell.zone_type == "pedestrian"
+                            or cell.zone_type == "start_finish"
                         ):
                             color = (0, 0, 254)
                             # arcade.draw_polygon_filled(cell.get_translated_vertices(), (0, 254, 0))

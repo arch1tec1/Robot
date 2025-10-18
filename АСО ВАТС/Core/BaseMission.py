@@ -28,7 +28,7 @@ class BaseMission(ABC):
         self.status = 0
         self.mission_uid = None
         self.competitor_uid = None
-        self.time_start = None
+        self.time_start = 0
 
         self.mission_tasks = {}
         self.mission_vars = {}
