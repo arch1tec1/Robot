@@ -21,6 +21,8 @@ class Robot:
         self.wheel_base = Rect(0, 0, c.ROBOT_WHEEL_OFFSET_Y, c.ROBOT_WHEEL_OFFSET_X, from_center=True)
         self.wheels = self._make_wheels()
 
+        self.brush = Rect(c.ROBOT_HEIGHT, c.ROBOT_WIDTH, 40, c.ROBOT_WIDTH, from_center=False)
+
         self.current_cell_point = None
         self.current_cell_frame = None
         self.two_wheels = []
@@ -116,6 +118,7 @@ class Robot:
             r,
         )
         self.full_frame.move(x, y, r)
+        self.brush.move(self.chassis.get_vertices()[1][0], self.chassis.get_vertices()[1][1], r)
 
 
 class Robots:

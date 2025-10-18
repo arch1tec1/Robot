@@ -106,8 +106,12 @@ class AppWindow(arcade.Window):
             if robot.r_id is not None:
                 if robot.position_quality < 0.1:
                     continue
+                if self.app_context.spd.brush.state > 0:
+                    color = (0, 254, 0)
+                else:
+                    color = (254, 0, 0)
                 arcade.draw_polygon_filled(robot.chassis.get_translated_vertices(), (254, 254, 0))
-                # arcade.draw_polygon_outline(robot.wheel_base.get_translated_vertices(), (0, 254, 254))
+                arcade.draw_polygon_filled(robot.brush.get_translated_vertices(), color)
                 if robot.r_id != "002":
                     arcade.Text(
                         "t: " + str(round(robot.brush_controller_temperature)) + "°C",
