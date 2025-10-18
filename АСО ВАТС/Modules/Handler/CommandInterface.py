@@ -99,13 +99,13 @@ class CommandInterface(BaseHandler):
             self.context.lg.log("Команда '/stop' успешно выполнена")
         elif command == "/reset":
             if c.MISSION_MODE == "chvt":
-                self.context.mission = ChvtMission(self)
-                self.context.spd = ChvtSPDSet(self)
+                self.context.mission = ChvtMission(self.context)
+                self.context.spd = ChvtSPDSet(self.context)
             elif c.MISSION_MODE == "lct":
-                self.context.mission = LctMission(self)
-                self.context.spd = LctSPDSet(self)
+                self.context.mission = LctMission(self.context)
+                self.context.spd = LctSPDSet(self.context)
             self.context.field = Field()
-            self.context.robots = Robots(self)
+            self.context.robots = Robots(self.context)
             self.context.mission.triggers.reset_mission_trigger = True
             self.context.mission.triggers.reset_twin_trigger = True
             self.context.lg.log("Команда '/reset' успешно выполнена")
