@@ -15,6 +15,8 @@ if is_windows:
     import msvcrt
 
 import const as c
+
+
 class CommandInterface(BaseHandler):
     def __init__(self, context):
         super().__init__(context)

@@ -242,10 +242,11 @@ class LctMission(BaseMission):
             self.panel_mission_data.sec_targets["CybP_04"] = "running"
 
             def stop_cyb_04():
-                stop_check_zones = [*f.get_service_zone("cyb_p_04_trigger")]
-                if self.check_robot_in_zones(stop_check_zones):
+                stop_check_zones = f.get_service_zone("cyb_p_04_trigger")
+                if self.check_robot_in_zones(stop_check_zones, frame=False):
                     return False
 
+                self.context.lg.warn("КП (CybP_04) деактивировано: Система навигации работает штатно")
                 self.cyb_status["CybP_04"] = "done"
                 self.panel_mission_data.sec_domains["navigation"] = "good"
                 self.panel_mission_data.sec_targets["CybP_04"] = "done"

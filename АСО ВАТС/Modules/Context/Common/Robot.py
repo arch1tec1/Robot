@@ -34,7 +34,7 @@ class Robot:
             c.ROBOT_WHEEL_OFFSET_X + c.ROBOT_WHEEL_RADIUS,
             from_center=True,
         )
-        
+
         self.r_speed = 0
         self.brush_controller_temperature = 0
 

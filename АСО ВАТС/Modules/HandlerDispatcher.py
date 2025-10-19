@@ -30,7 +30,7 @@ class HandlerDispatcher(BaseHandler):
             self.handlers.append(TwinPositionReceiveHandler(self.context))
         else:
             self.handlers.append(NavigationPositionReceiveHandler(self.context))
-        
+
         self.handlers.append(RobotStatusReceiveHandler(self.context))
 
         if c.MISSION_MODE == "chvt":

@@ -120,6 +120,9 @@ class LctHTTPMissionReceiver(BaseHttpTransport):
                 state = 1 - self.context.spd.barrier.state
                 if random.randint(0, 10) > 5:
                     self.context.spd.barrier.state = 1 - self.context.spd.barrier.state
+                    self.context.lg.log("Шлагбаум успешно открылся")
+                else:
+                    self.context.lg.log("Шлагбаум успешно не открылся")
                 return {"status": "OK", "content": {"state": 1 - state}}
             else:
                 return {"status": "ERROR", "content": "too far"}

@@ -110,6 +110,7 @@ class AppWindow(arcade.Window):
                     color = (0, 254, 0)
                 else:
                     color = (254, 0, 0)
+
                 arcade.draw_polygon_filled(robot.chassis.get_translated_vertices(), (254, 254, 0))
                 arcade.draw_polygon_filled(robot.brush.get_translated_vertices(), color)
                 if robot.r_id != "002":

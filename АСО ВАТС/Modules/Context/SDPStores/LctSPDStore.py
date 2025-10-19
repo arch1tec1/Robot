@@ -11,6 +11,7 @@ class PedestrianSPD(BaseSPD):
 @dataclass
 class BarrierSPD(BaseSPD):
     state: int = 0
+    color: int = 0
 
 
 @dataclass

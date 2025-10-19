@@ -98,9 +98,9 @@ class TrustedHandler(BaseHandler):
             "position_x": self.context.robot.position_x,
             "position_y": self.context.robot.position_y,
             "rotation": self.context.robot.rotation,
-            "base_station_alpha_rssi": self.context.mission.mission_vars["base_station_alpha_rssi"],
-            "base_station_bravo_rssi": self.context.mission.mission_vars["base_station_bravo_rssi"],
-            "base_station_charlie_rssi": self.context.mission.mission_vars["base_station_charlie_rssi"],
+            "base_station_alpha_rssi": self.context.mission.mission_vars.get("base_station_alpha_rssi", None),
+            "base_station_bravo_rssi": self.context.mission.mission_vars.get("base_station_bravo_rssi", None),
+            "base_station_charlie_rssi": self.context.mission.mission_vars.get("base_station_charlie_rssi", None),
             "brush_controller_temperature": self.context.mission.brush_controller_temperature,
         }
 

@@ -73,7 +73,7 @@ class BarrierSPDMiddleware(BaseSPDMiddleware):
         super().__init__(context, device)
 
     def prepare_data(self):
-        return {"s": self.device.state}
+        return {"s": self.device.state, "c": self.device.color}
 
     def process_response(self, message):
         pass
